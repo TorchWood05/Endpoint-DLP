@@ -1,19 +1,16 @@
-#![allow(warnings)]
-
 mod config;
 
-use std::fs;
-use std::fs::OpenOptions;
-use std::os::unix::fs::{DirBuilderExt, OpenOptionsExt};
-use std::io::Write;
-use std::path::Path;
-use uuid::Uuid;
-use tracing::{info, warn};
-use nix::sys::utsname::uname;
 use anyhow::{Context, Result};
-
+use nix::sys::utsname::uname;
+use std::fs::{self, File, OpenOptions};
+use std::io::{ErrorKind, Write};
+use std::os::unix::fs::{DirBuilderExt, OpenOptionsExt};
+use std::path::Path;
+use tracing::info;
+use uuid::Uuid;
 
 #[derive(Debug)]
+#[allow(dead_code)]
 struct SystemInfo {
     os: String,
     kernel_version: String,
@@ -36,13 +33,13 @@ fn system_info() -> Result<SystemInfo> {
 
     let os_release = fs::read_to_string("/etc/os-release")
         .or_else(|_| fs::read_to_string("/usr/lib/os-release"))
-        .context("failed to read os-release")?;
+        .context("Failed to determine distro_id")?;
 
     let distro_id = os_release
         .lines()
         .find_map(|line| line.strip_prefix("ID="))
         .map(|v| v.trim().trim_matches('"').to_string())
-        .unwrap_or_else(|| "unknown".to_string());
+        .unwrap_or_else(|| "Unknown".to_string());
 
     info!("OS             : {os}");
     info!("Distro ID      : {distro_id}");
@@ -58,71 +55,75 @@ fn system_info() -> Result<SystemInfo> {
 }
 
 fn agent_id() -> Result<String> {
-    let dir = Path::new("/var/lib/argus");
-    let path = dir.join("argusId");
+    let dir = Path::new(config::DATA_DIR);
+    let path = Path::new(config::ID_FILE);
 
     fs::DirBuilder::new()
         .recursive(true)
         .mode(0o700)
         .create(dir)
-        .context("Failed to create directory")?;
+        .with_context(|| format!("Failed to create data directory {}", dir.display()))?;
 
-    match fs::read_to_string(&path) {
+    match fs::read_to_string(path) {
         Ok(saved) => {
             let id = Uuid::parse_str(saved.trim())
-                .context("Existing Argus ID is either invalid / corrupted")?;
-
+                .context("Existing Argus ID is invalid / corrupted")?;
             info!("Argus ID loaded");
-
             return Ok(id.to_string());
         }
-
-        Err(error)
-            if error.kind() == std::io::ErrorKind::NotFound => {}
-
-        Err(error) => {
-            return Err(error)
-                .context("Failed to read Argus ID");
-        }
+        Err(e) if e.kind() == ErrorKind::NotFound => {}
+        Err(e) => return Err(e).context("Failed to read Argus ID"),
     }
 
     let id = Uuid::new_v4();
+    let tmp = dir.join("argusId.tmp");
+
+    match fs::remove_file(&tmp) {
+        Ok(()) => {}
+        Err(e) if e.kind() == ErrorKind::NotFound => {}
+        Err(e) => return Err(e).context("Failed to remove stale temp file"),
+    }
 
     let mut file = OpenOptions::new()
         .write(true)
         .create_new(true)
-        .mode(0o600)
-        .open(&path)
-        .context("Failed to create Argus ID")?;
+        .mode(0o400)
+        .open(&tmp)
+        .context("Failed to create Argus ID temp file")?;
 
-    writeln!(file, "{id}")
-        .context("Failed to write Argus ID")?;
+    writeln!(file, "{id}").context("Failed to write Argus ID")?;
+    file.sync_all().context("Failed to persist Argus ID")?;
+    drop(file);
 
-    file.sync_all()
-        .context("Failed to persist Argus ID")?;
+    fs::rename(&tmp, path).context("Failed to save Argus ID")?;
+
+    File::open(dir)
+        .and_then(|d| d.sync_all())
+        .context("Failed to sync data directory")?;
 
     info!("New Argus ID created");
-
     Ok(id.to_string())
 }
 
 fn init() -> Result<()> {
     info!("Initializing Argus");
+    info!("Checking Argus configuration");
+    config::install_default_config().context("Failed to setup default configuration")?;
     info!("Loading configuration");
-    let configs = String::new();
-    let id = agent_id()?;
+    let _cfg = config::load_config()?;
+    info!("Configuration loaded");
+    let _id = agent_id()?;
     info!("Collecting system information");
-    let system_info = system_info()?;
-    
+    let _sysinfo = system_info()?;
     info!("Argus initialized");
     Ok(())
 }
 
 fn main() {
     tracing_subscriber::fmt::init();
+
     if let Err(e) = init() {
         tracing::error!("fatal: {e:#}");
         std::process::exit(1);
     }
-
 }

@@ -1,0 +1,11 @@
+[agent]
+run_mode = "monitor"
+
+[logging]
+level = "info"
+
+[sensors]
+
+[sensors.fanotify]
+enabled = true
+watch_paths = ["/home"]

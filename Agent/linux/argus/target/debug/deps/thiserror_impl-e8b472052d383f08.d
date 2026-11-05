@@ -1,0 +1,17 @@
+/home/test/Desktop/Dlp/Agent/linux/argus/target/debug/deps/thiserror_impl-e8b472052d383f08.d: /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/lib.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/ast.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/attr.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/expand.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/fallback.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/fmt.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/generics.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/prop.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/scan_expr.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/unraw.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/valid.rs
+
+/home/test/Desktop/Dlp/Agent/linux/argus/target/debug/deps/libthiserror_impl-e8b472052d383f08.so: /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/lib.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/ast.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/attr.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/expand.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/fallback.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/fmt.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/generics.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/prop.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/scan_expr.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/unraw.rs /home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/valid.rs
+
+/home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/lib.rs:
+/home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/ast.rs:
+/home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/attr.rs:
+/home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/expand.rs:
+/home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/fallback.rs:
+/home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/fmt.rs:
+/home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/generics.rs:
+/home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/prop.rs:
+/home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/scan_expr.rs:
+/home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/unraw.rs:
+/home/test/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-impl-2.0.21/src/valid.rs:
+
+# env-dep:CARGO_PKG_VERSION_PATCH=21
